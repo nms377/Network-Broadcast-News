@@ -4,22 +4,19 @@ let server = net.createServer((socket) => {
 
 	//read from the client socket connection
 	socket.on('data', (chunk) => {
-		// messageCount ++;
 		socket.write('hello\n');
-		console.log(`chuck from client: ${chunk}`);
-
+		console.log(`client: ${chunk}`);
 	});
 
 	process.stdin.on('data', (cmd) => {
 		socket.write(cmd);
 	});
 
-	// clientsCount++;
-	// console.log(`the current client count is: ${clientsCount}`);
+	process.stdin.pipe(server);
 
 });
 
 //callback function gets invoked once serve has started
-server.listen(6969, '0.0.0.0' /*lets ppl bind to your port*/, () => {
+server.listen(6969, '0.0.0.0', () => {
 	console.log('opened server on', server.address());
 });
